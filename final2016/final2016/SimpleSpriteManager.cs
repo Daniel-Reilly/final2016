@@ -18,6 +18,7 @@ namespace Easter2016
         Player player;
         Tower startTower;
         Tower playerTower;
+        SimpleSprite background;
 
         public SimpleSpriteManager(Game g) : base(g)
         {
@@ -80,16 +81,18 @@ namespace Easter2016
             0
             );
 
-
+            background = new SimpleSprite(Game, "Background", new Vector2(0, 0));
+            background.Active = true;
             player = new Player(Game, "Player", playerPosition);
             playerTower = new Tower(Game, "End Tower", PlayerTowerPos );
             startTower = new Tower(Game, "Start Tower", startTowerPos);
+            
 
             for (int i = 0; i < 5; i++)
             {
                 Stack<Vector2> path = new Stack<Vector2>();
                 path.Push(PlayerTowerPos);
-                path.Push(new Vector2(Utilities.Utility.NextRandom(0,GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(400,GraphicsDevice.Viewport.Height)));
+                path.Push(new Vector2(Utilities.Utility.NextRandom(0,GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(400,GraphicsDevice.Viewport.Height - 50)));
                 path.Push(new Vector2(Utilities.Utility.NextRandom(0,GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(200,400)));
                 path.Push(new Vector2(Utilities.Utility.NextRandom(0,GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100,200)));
                 path.Push(new Vector2(Utilities.Utility.NextRandom(0,GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100)));
@@ -117,7 +120,10 @@ namespace Easter2016
                 // Add a new one
                 Stack<Vector2> path = new Stack<Vector2>();
                 path.Push(target);
-                path.Push(new Vector2(Utilities.Utility.NextRandom(200), Utilities.Utility.NextRandom(400)));
+                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(400, GraphicsDevice.Viewport.Height - 50)));
+                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(200, 400)));
+                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100, 200)));
+                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100)));
                 SimpleSprite s = new SimpleSprite(Game, "Black Knight", startTowerPos, path);
                 _blackKnights.Add(s);
                 // acticate the next one at the head of the list
@@ -155,6 +161,7 @@ namespace Easter2016
             LoadedGameContent.Textures.Add("Start Tower", Game.Content.Load<Texture2D>("Start Tower"));
             LoadedGameContent.Textures.Add("End Tower", Game.Content.Load<Texture2D>("End Tower"));
             LoadedGameContent.Textures.Add("Player", Game.Content.Load<Texture2D>("Player"));
+            LoadedGameContent.Textures.Add("Background", Game.Content.Load<Texture2D>("background"));
             LoadedGameContent.Fonts.Add("SimpleSpriteFont", Game.Content.Load<SpriteFont>("SimpleSpriteFont"));
             _audioPlayer = LoadedGameContent.Sounds["backing"].CreateInstance();
             _audioPlayer.Volume = 0.2f;

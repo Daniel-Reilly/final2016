@@ -28,7 +28,7 @@ namespace Easter2016
         {
             // TODO: Add your initialization logic here
             new SimpleSpriteManager(this);
-            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferWidth = 900;
             graphics.PreferredBackBufferHeight = 600;
             graphics.ApplyChanges();
             IsMouseVisible = true;
