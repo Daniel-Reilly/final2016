@@ -12,6 +12,7 @@ namespace final2016
         public int health;
         private Texture2D txHealthBar; // hold the texture
         public Vector2 position; // Position on the screen
+        
          
         public Rectangle HealthRect
         {
@@ -45,7 +46,6 @@ namespace final2016
         {
             base.Draw(gameTime);
 
-            
             SpriteBatch spriteBatch = Game.Services.GetService<SpriteBatch>();
             spriteBatch.Begin();
             if (health > 60)

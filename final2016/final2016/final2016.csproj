@@ -65,6 +65,7 @@
     <Content Include="Content\cannonball.png" />
     <Content Include="Content\End Tower.png" />
     <Content Include="Content\Impact.wav" />
+    <Content Include="Content\lose.jpg" />
     <Content Include="Content\Player.png" />
     <Content Include="Content\Start Tower.png" />
     <Content Include="Icon.ico" />

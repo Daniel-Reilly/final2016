@@ -19,6 +19,7 @@ namespace final2016
         Tower startTower;
         Tower playerTower;
         SimpleSprite background;
+        SimpleSprite losingScreen;
 
         public SimpleSpriteManager(Game g) : base(g)
         {
@@ -86,7 +87,9 @@ namespace final2016
             player = new Player(Game, "Player", playerPosition);
             playerTower = new Tower(Game, "End Tower", PlayerTowerPos );
             startTower = new Tower(Game, "Start Tower", startTowerPos);
-            
+            losingScreen = new SimpleSprite(Game, "lose", new Vector2(0, 0));
+
+
 
             for (int i = 0; i < 5; i++)
             {
@@ -144,6 +147,7 @@ namespace final2016
                         LoadedGameContent.Sounds["Impact"].Play();
                         Game.Components.Remove(enemy);
                         _blackKnights.Remove(enemy);
+                        playerTower.towerHealth -= 100;
                         break;
                    }
                 }
@@ -208,6 +212,11 @@ namespace final2016
            // checkTimedObjects();
             MonitorCannonBalls();
             monitorKnights();
+            startTower.towerHealth = 0;
+            if (playerTower.towerHealth == 0)
+            {
+                lose();
+            }
             base.Update(gameTime);
         }
 
@@ -231,6 +240,12 @@ namespace final2016
 
             }
 
+        }
+
+        private void lose()
+        {
+            _audioPlayer.Stop();
+            losingScreen.Active = true;
         }
     }
 }
