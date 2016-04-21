@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,10 +11,15 @@ namespace Easter2016
     {
         float _damage;
 
+        HealthBar healthBar;
+        public int towerHealth = 100;
+
         public Tower(Game g, string SpriteName, Vector2 StartPosition) : base(g,SpriteName,StartPosition)
         {
+            
             Active = true;
-
+            healthbar = new HealthBar(g, StartPosition);
+            healthbar.health = towerHealth;
         }
 
         public float Damage
@@ -31,8 +37,9 @@ namespace Easter2016
 
         public override void Update(GameTime gameTime)
         {
-            
+            healthbar.health = towerHealth;
         }
 
     }
+    
 }

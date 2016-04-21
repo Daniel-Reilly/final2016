@@ -39,6 +39,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Game1.cs" />
+    <Compile Include="HealthBar.cs" />
     <Compile Include="LoadGameContent.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
