@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace Easter2016
+namespace final2016
 {
     /// <summary>
     /// This is the main type for your game.

@@ -7,7 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Easter2016
+namespace final2016
 {
     class SimpleSpriteManager: DrawableGameComponent
     {
