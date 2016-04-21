@@ -11,6 +11,7 @@ namespace final2016
 {
     class SimpleSpriteManager: DrawableGameComponent
     {
+        public static Queue ScoreIcons = new Queue();
         SoundEffectInstance _audioPlayer;
         List<SimpleSprite> _blackKnights = new List<SimpleSprite>();
         LinkedList<TimedSprite> timed = new LinkedList<TimedSprite>();
@@ -20,6 +21,9 @@ namespace final2016
         Tower playerTower;
         SimpleSprite background;
         SimpleSprite losingScreen;
+        SimpleSprite winningScreen;
+        SimpleSprite scoreicon;
+        Vector2 currentIconPosition;
 
         public SimpleSpriteManager(Game g) : base(g)
         {
@@ -88,6 +92,7 @@ namespace final2016
             playerTower = new Tower(Game, "End Tower", PlayerTowerPos );
             startTower = new Tower(Game, "Start Tower", startTowerPos);
             losingScreen = new SimpleSprite(Game, "lose", new Vector2(0, 0));
+            winningScreen = new SimpleSprite(Game, "win", new Vector2(0, 0));
 
 
 
@@ -167,6 +172,8 @@ namespace final2016
             LoadedGameContent.Textures.Add("Player", Game.Content.Load<Texture2D>("Player"));
             LoadedGameContent.Textures.Add("Background", Game.Content.Load<Texture2D>("background"));
             LoadedGameContent.Textures.Add("lose", Game.Content.Load<Texture2D>("lose"));
+            LoadedGameContent.Textures.Add("win", Game.Content.Load<Texture2D>("win"));
+            LoadedGameContent.Textures.Add("scoreicon", Game.Content.Load<Texture2D>("score icon"));
             LoadedGameContent.Fonts.Add("SimpleSpriteFont", Game.Content.Load<SpriteFont>("SimpleSpriteFont"));
             _audioPlayer = LoadedGameContent.Sounds["backing"].CreateInstance();
             _audioPlayer.Volume = 0.2f;
@@ -202,6 +209,23 @@ namespace final2016
                         Game.Components.Remove(b);
                         Game.Components.Remove(enemy);
                         _blackKnights.Remove(enemy);
+                        
+                        if (ScoreIcons.Count == 0)
+                        {
+                            currentIconPosition = Vector2.Zero;
+                            scoreicon = new SimpleSprite(Game, "scoreicon", currentIconPosition);
+                            currentIconPosition = new Vector2(64, 0);
+                        }
+                        else
+                        {
+                            
+                            scoreicon = new SimpleSprite(Game, "scoreicon", currentIconPosition);
+                            currentIconPosition = new Vector2(currentIconPosition.X + 64, 0);
+                        }
+                        
+                        ScoreIcons.Enqueue(scoreicon);
+                        
+
                     }
                 }
             }
@@ -214,11 +238,23 @@ namespace final2016
             MonitorCannonBalls();
             monitorKnights();
             startTower.towerHealth = 0;
+            
             if (playerTower.towerHealth == 0)
             {
                 lose();
             }
+
+            if (ScoreIcons.Count == 10)
+            {
+                win();
+            }
             base.Update(gameTime);
+        }
+
+        private void win()
+        {
+            _audioPlayer.Stop();
+            winningScreen.Active = true;
         }
 
         private void checkTimedObjects()

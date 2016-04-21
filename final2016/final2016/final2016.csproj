@@ -70,6 +70,7 @@
     <Content Include="Content\Player.png" />
     <Content Include="Content\score icon.png" />
     <Content Include="Content\Start Tower.png" />
+    <Content Include="Content\win.jpg" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
