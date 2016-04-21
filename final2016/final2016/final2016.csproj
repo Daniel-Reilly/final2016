@@ -67,10 +67,12 @@
     <Content Include="Content\End Tower.png" />
     <Content Include="Content\Impact.wav" />
     <Content Include="Content\lose.jpg" />
+    <Content Include="Content\loser.wav" />
     <Content Include="Content\Player.png" />
     <Content Include="Content\score icon.png" />
     <Content Include="Content\Start Tower.png" />
     <Content Include="Content\win.jpg" />
+    <Content Include="Content\winner.wav" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>

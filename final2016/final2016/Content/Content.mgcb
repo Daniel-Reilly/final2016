@@ -147,3 +147,15 @@
 /processorParam:TextureFormat=Color
 /build:win.jpg
 
+#begin loser.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:loser.wav
+
+#begin winner.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:winner.wav
+

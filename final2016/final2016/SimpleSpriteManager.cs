@@ -24,6 +24,8 @@ namespace final2016
         SimpleSprite winningScreen;
         SimpleSprite scoreicon;
         Vector2 currentIconPosition;
+        Vector2 PlayerTowerPos;
+        Vector2 startTowerPos;
 
         public SimpleSpriteManager(Game g) : base(g)
         {
@@ -72,7 +74,7 @@ namespace final2016
         {
 
             // Players Tower is bottom left
-            Vector2 PlayerTowerPos = new Vector2(0,
+             PlayerTowerPos = new Vector2(0,
             GraphicsDevice.Viewport.Height - LoadedGameContent.Textures["End Tower"].Height
             
             );
@@ -82,7 +84,7 @@ namespace final2016
                         -LoadedGameContent.Textures["Player"].Height
                         ) ;
 
-            Vector2 startTowerPos = new Vector2(GraphicsDevice.Viewport.Width - LoadedGameContent.Textures["Start Tower"].Width,
+            startTowerPos = new Vector2(GraphicsDevice.Viewport.Width - LoadedGameContent.Textures["Start Tower"].Width,
             0
             );
 
@@ -114,49 +116,54 @@ namespace final2016
 
         public  void monitorKnights()
         {
-            // if they are not all stopped then there is at least one active
-            var _activeKnights = _blackKnights.Where(k => !k.Stopped() && k.Active);
-            if (_activeKnights.Count() < 1)
+            if (ScoreIcons.Count < 10)
             {
-                // then the inactive one has been deleted so activate the next one and add
-                // a new one
-                Vector2 startTowerPos = new Vector2(GraphicsDevice.Viewport.Width - LoadedGameContent.Textures["Start Tower"].Width,
-                            0);
-                Vector2 target = new Vector2(0,
-                                    GraphicsDevice.Viewport.Height - LoadedGameContent.Textures["End Tower"].Height
-                                    );
-                // Add a new one
-                Stack<Vector2> path = new Stack<Vector2>();
-                path.Push(target);
-                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(400, GraphicsDevice.Viewport.Height - 50)));
-                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(200, 400)));
-                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100, 200)));
-                path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100)));
-                SimpleSprite s = new SimpleSprite(Game, "Black Knight", startTowerPos, path);
-                _blackKnights.Add(s);
-                // acticate the next one at the head of the list
-                _blackKnights.First().Active = true;
-                _blackKnights.First().followPath();
-            }
-            else 
-            {
-                // Check for collision with the tower 
-                // NOTE: we only delete the first one.
-                // Subsequent updates will call this again and delete others one at a time
-                // otherwise we get a iteration error over active knights as the referennce to the object disappears 
-                // When removed from the _blackknoghts collection and the Game Component collection
-                foreach (var enemy in _activeKnights)
-                {
-                    if (playerTower.Collision(enemy))
-                    {
-                        LoadedGameContent.Sounds["Impact"].Play();
-                        Game.Components.Remove(enemy);
-                        _blackKnights.Remove(enemy);
-                        playerTower.towerHealth -= 20;
-                        break;
-                   }
-                }
 
+
+                // if they are not all stopped then there is at least one active
+                var _activeKnights = _blackKnights.Where(k => !k.Stopped() && k.Active);
+                if (_activeKnights.Count() < 1)
+                {
+                    // then the inactive one has been deleted so activate the next one and add
+                    // a new one
+                    Vector2 startTowerPos = new Vector2(GraphicsDevice.Viewport.Width - LoadedGameContent.Textures["Start Tower"].Width,
+                                0);
+                    Vector2 target = new Vector2(0,
+                                        GraphicsDevice.Viewport.Height - LoadedGameContent.Textures["End Tower"].Height
+                                        );
+                    // Add a new one
+                    Stack<Vector2> path = new Stack<Vector2>();
+                    path.Push(target);
+                    path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(400, GraphicsDevice.Viewport.Height - 50)));
+                    path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(200, 400)));
+                    path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100, 200)));
+                    path.Push(new Vector2(Utilities.Utility.NextRandom(0, GraphicsDevice.Viewport.Width), Utilities.Utility.NextRandom(100)));
+                    SimpleSprite s = new SimpleSprite(Game, "Black Knight", startTowerPos, path);
+                    _blackKnights.Add(s);
+                    // acticate the next one at the head of the list
+                    _blackKnights.First().Active = true;
+                    _blackKnights.First().followPath();
+                }
+                else
+                {
+                    // Check for collision with the tower 
+                    // NOTE: we only delete the first one.
+                    // Subsequent updates will call this again and delete others one at a time
+                    // otherwise we get a iteration error over active knights as the referennce to the object disappears 
+                    // When removed from the _blackknoghts collection and the Game Component collection
+                    foreach (var enemy in _activeKnights)
+                    {
+                        if (playerTower.Collision(enemy))
+                        {
+                            LoadedGameContent.Sounds["Impact"].Play();
+                            Game.Components.Remove(enemy);
+                            _blackKnights.Remove(enemy);
+                            playerTower.towerHealth -= 20;
+                            break;
+                        }
+                    }
+
+                }
             }
         }
 
@@ -165,6 +172,8 @@ namespace final2016
             LoadedGameContent.Sounds.Add("backing", Game.Content.Load<SoundEffect>("Backing Track wav"));
             LoadedGameContent.Sounds.Add("cannon fire", Game.Content.Load<SoundEffect>("cannon fire"));
             LoadedGameContent.Sounds.Add("Impact", Game.Content.Load<SoundEffect>("Impact"));
+            LoadedGameContent.Sounds.Add("winner", Game.Content.Load<SoundEffect>("winner"));
+            LoadedGameContent.Sounds.Add("loser", Game.Content.Load<SoundEffect>("loser"));
             LoadedGameContent.Textures.Add("Black Knight", Game.Content.Load<Texture2D>("bee"));
             LoadedGameContent.Textures.Add("cannonball", Game.Content.Load<Texture2D>("cannonball"));
             LoadedGameContent.Textures.Add("Start Tower", Game.Content.Load<Texture2D>("Start Tower"));
@@ -254,7 +263,25 @@ namespace final2016
         private void win()
         {
             _audioPlayer.Stop();
+            _audioPlayer = LoadedGameContent.Sounds["winner"].CreateInstance();
+            _audioPlayer.Volume = 0.5f;
+            _audioPlayer.IsLooped = true;
+            _audioPlayer.Play();
+            
+
             winningScreen.Active = true;
+
+            for (int i = 0; i < ScoreIcons.Count; i++)
+            {
+                Stack<Vector2> path = new Stack<Vector2>();
+                path.Push(PlayerTowerPos);
+                SimpleSprite s = new SimpleSprite(Game, "Black Knight", startTowerPos, path);
+                _blackKnights.Add(s);
+
+            }
+            _blackKnights.First().Active = true;
+            _blackKnights.First().followPath();
+
         }
 
         private void checkTimedObjects()
@@ -282,6 +309,11 @@ namespace final2016
         private void lose()
         {
             _audioPlayer.Stop();
+            _audioPlayer = LoadedGameContent.Sounds["loser"].CreateInstance();
+            _audioPlayer.Volume = 0.5f;
+            _audioPlayer.IsLooped = true;
+            _audioPlayer.Play();
+            
             losingScreen.Active = true;
         }
     }
