@@ -147,7 +147,7 @@ namespace final2016
                         LoadedGameContent.Sounds["Impact"].Play();
                         Game.Components.Remove(enemy);
                         _blackKnights.Remove(enemy);
-                        playerTower.towerHealth -= 100;
+                        playerTower.towerHealth -= 20;
                         break;
                    }
                 }
@@ -160,12 +160,13 @@ namespace final2016
             LoadedGameContent.Sounds.Add("backing", Game.Content.Load<SoundEffect>("Backing Track wav"));
             LoadedGameContent.Sounds.Add("cannon fire", Game.Content.Load<SoundEffect>("cannon fire"));
             LoadedGameContent.Sounds.Add("Impact", Game.Content.Load<SoundEffect>("Impact"));
-            LoadedGameContent.Textures.Add("Black Knight", Game.Content.Load<Texture2D>("Black Knight"));
+            LoadedGameContent.Textures.Add("Black Knight", Game.Content.Load<Texture2D>("bee"));
             LoadedGameContent.Textures.Add("cannonball", Game.Content.Load<Texture2D>("cannonball"));
             LoadedGameContent.Textures.Add("Start Tower", Game.Content.Load<Texture2D>("Start Tower"));
             LoadedGameContent.Textures.Add("End Tower", Game.Content.Load<Texture2D>("End Tower"));
             LoadedGameContent.Textures.Add("Player", Game.Content.Load<Texture2D>("Player"));
             LoadedGameContent.Textures.Add("Background", Game.Content.Load<Texture2D>("background"));
+            LoadedGameContent.Textures.Add("lose", Game.Content.Load<Texture2D>("lose"));
             LoadedGameContent.Fonts.Add("SimpleSpriteFont", Game.Content.Load<SpriteFont>("SimpleSpriteFont"));
             _audioPlayer = LoadedGameContent.Sounds["backing"].CreateInstance();
             _audioPlayer.Volume = 0.2f;

@@ -60,6 +60,7 @@
   <ItemGroup>
     <Content Include="Content\background.png" />
     <Content Include="Content\Backing track wav.wav" />
+    <Content Include="Content\bee.png" />
     <Content Include="Content\Black Knight.png" />
     <Content Include="Content\cannon fire.wav" />
     <Content Include="Content\cannonball.png" />
@@ -67,6 +68,7 @@
     <Content Include="Content\Impact.wav" />
     <Content Include="Content\lose.jpg" />
     <Content Include="Content\Player.png" />
+    <Content Include="Content\score icon.png" />
     <Content Include="Content\Start Tower.png" />
     <Content Include="Icon.ico" />
   </ItemGroup>
